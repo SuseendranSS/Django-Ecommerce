@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html>
+  {% load static %}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/product.css' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <header>
+    <h1>Ecommerce</h1>
+    <nav>
+      <ul class="navbar">
+        <li><a href="{% url 'home:index_view' %}"><i class="fa-solid fa-house"></i></a></li>
+        <li>
+            <a href="{% url 'cart' %}">
+                <div class="cart-icon">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <div class="cart-count">{{ cart_count }}</div>
+                </div>
+            </a>
+        </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle"><i class="fa-solid fa-user"></i></a>
+            <ul class="dropdown-menu" aria-labelledby="navbarLightDropdownMenuLink">
+              {% if not user.is_authenticated %}
+                <li><a href="{% url 'login_view' %}" class="dropdown-item">Login</a></li>
+              {% else %}
+                <li><a href="{% url 'logout_view' %}" class="dropdown-item">Logout</a></li>
+              {% endif %}
+            </ul>
+        </li>
+    </ul>          
+  </nav>  
+  </header>
+  {% block start %}
+  <!-- Content from extended templates will be rendered here -->
+  {% endblock %}
+  <footer>
+    <div class="fleft">
+      <p>© 2023 Ecommerce. All Rights Reserved.</p>
+    </div>
+    <div class="fright">
+      <div class="social-media-icons">
+        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+      </div>
+    </div>
+  </footer>
+</body>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const dropdownMenu = document.querySelector(".navbar .dropdown-menu");
+    const dropdownContainer = document.querySelector(".navbar .dropdown");
+
+    // Function to show dropdown menu
+    function showDropdownMenu() {
+      dropdownMenu.style.opacity = 1;
+      dropdownMenu.style.pointerEvents = "auto";
+    }
+
+    // Function to hide dropdown menu
+    function hideDropdownMenu() {
+      dropdownMenu.style.opacity = 0;
+      dropdownMenu.style.pointerEvents = "none";
+    }
+
+    // Event listeners for showing and hiding dropdown menu
+    dropdownContainer.addEventListener("mouseenter", showDropdownMenu);
+    dropdownContainer.addEventListener("mouseleave", hideDropdownMenu);
+
+    dropdownMenu.addEventListener("mouseenter", function() {
+      clearTimeout(hideTimeout);
+    });
+
+    dropdownMenu.addEventListener("mouseleave", function() {
+      hideDropdownMenu();
+    });
+
+    // Variable to store the timeout reference
+    let hideTimeout;
+
+    // Event listeners to handle mouse entering and leaving the dropdown container
+    dropdownContainer.addEventListener("mouseenter", function() {
+      clearTimeout(hideTimeout);
+      showDropdownMenu();
+    });
+
+    dropdownContainer.addEventListener("mouseleave", function() {
+      hideTimeout = setTimeout(hideDropdownMenu, 3000); // 3000 milliseconds = 3 seconds
+    });
+  });
+</script>
+</html>

@@ -1,0 +1,37 @@
+<html>
+  {% load static %}
+  <head>
+  <link rel="stylesheet" href="{% static 'css/alert.css' %}" />
+  </head>
+  <body>
+    {% if messages %}
+  <div class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      {% for message in messages %}
+        <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <script>
+    var modal = document.querySelector('.modal');
+    var closeBtn = document.querySelector('.close');
+
+    closeBtn.addEventListener('click', function() {
+      modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', function(event) {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    modal.style.display = 'block';
+  </script>
+{% endif %}
+
+  </body>
+</html>

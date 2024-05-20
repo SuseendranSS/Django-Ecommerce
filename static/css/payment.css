@@ -1,0 +1,33 @@
+/* payment.css */
+
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+img {
+    display: block;
+    margin: 20px auto;
+    width: 150px; /* Adjust size as needed */
+}
+
+h1 {
+    text-align: center;
+}
+
+.thank-you-text,
+.contact-support {
+    text-align: center;
+}

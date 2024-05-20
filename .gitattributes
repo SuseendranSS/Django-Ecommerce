@@ -1,0 +1,9 @@
+# Set all text files to use LF
+* text=auto
+
+# Set JavaScript files to use LF
+*.js text eol=lf
+
+# Set binary files to be ignored by Git's text handling
+*.jpg binary
+*.png binary

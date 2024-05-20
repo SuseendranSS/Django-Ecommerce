@@ -1,0 +1,129 @@
+{% extends 'base/base.html' %}
+{% block start %}
+<html lang="en">
+    {% load static %}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'css/cart.css' %}" />
+        <title>Ecommerce | Cart</title>
+         <!-- Include Razorpay JavaScript SDK -->
+         <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+         <!-- Include jQuery (if not already included) -->
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+         <script>
+             $(document).ready(function(){
+                 $('.pay-button').click(function(){
+                     // Perform AJAX request to fetch Razorpay order ID and other necessary details
+                     $.ajax({
+                         url: '{% url "payment_view" %}',
+                         type: 'GET',
+                         success: function(data) {
+                            console.log('Order Data:', data);
+                             // Initialize Razorpay payment form with fetched order data
+                             var options = {
+                                 "key": "{{ order_data.razorpay_key_id }}",
+                                 "amount": "{{ order_data.order_amount }}",
+                                 "currency": "INR",
+                                 "name": "Ecommerce",
+                                 "description": "Payment for your purchase",
+                                 "order_id": data.razorpay_order_id,
+                                 "handler": function(response){
+                                    Example: window.location.href = `http://127.0.0.1:8000/accounts/success/?razorpay_payment_id =
+                                    ${response.razorpay_payment_id}&razorpay_order_id = ${response.razorpay_order_id}$razorpay_signature = 
+                                    ${response.razorpay_signature}`;
+                                 },
+                                 "prefill": {
+                                     "name": "{{ request.user.first_name }} {{ request.user.last_name }}",
+                                     "email": "{{ request.user.email }}"
+                                 },
+                                 "theme": {
+                                     "color": "#3399cc"
+                                 }
+                             };
+                             var rzp = new Razorpay(options);
+                             rzp.open();
+                         },
+                         error: function(xhr, textStatus, errorThrown){
+                             // Handle error
+                             console.log('Error:', errorThrown);
+                         }
+                     });
+                 });
+             });
+         </script>
+    </head>
+    {% if cart_items %}
+    <body class="cart-items-exist">
+        <section>
+            <div class="cart">
+                <div class="cart-page">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cart_item in cart_items %}
+                                <div class="cart-info">
+                                    <tr>
+                                        <td class="pdt">
+                                            <img src="{{ cart_item.product.product_images.first.image.url }}" alt="{{ cart_item.product.product_name }}" width="100">
+                                            <p>{{ cart_item.product.product_name }}</p>
+                                        </td>                            
+                                        <td>{{ cart_item.product.price }}</td>
+                                        <td>{{ cart_item.quantity }}</td>
+                                        <td>{{ cart_item.pdt_total_price|floatformat:"0" }}</td>
+                                        <td>
+                                            <a href="{% url 'remove_from_cart' cart_item.uid %}"><i class="fa-solid fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>           
+                </div>
+                <div class = "right">
+                    <div class="coupon-box">
+                        <form method="POST" action="{% url 'apply_coupon' %}">
+                            {% include "base/alert.html" %}
+                            {% csrf_token %}
+                            <p>Have a coupon?</p>
+                            <input type="text" id="coupon-input" name="coupon" placeholder="Enter coupon code">
+                            <button type="submit" id="apply-coupon">Apply</button>
+                        </form>
+                    </div>
+                    {% if request.session.applied_coupons %}
+                    <div class="applied-coupons">
+                        <p>Applied Coupons:</p>
+                        {% for coupon in request.session.applied_coupons %}
+                            <form method="POST" action="" class="remove-coupon-form">
+                                {% csrf_token %}
+                                <input type="hidden" name="coupon_id" value="{{ coupon.coupon_id }}">
+                                <a href="{% url 'remove_coupon' coupon.coupon_code %}" >{{ coupon.coupon_code }} (₹{{ coupon.discount_price }} off)</a>
+                            </form>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <div class="payment">
+                        <div class="total-price"><p>Total Price</p><p>₹{{ total_price }}/-</p></div>
+                        <hr>
+                        <button class="pay-button">Proceed to pay</button>
+                    </div>
+                </div> 
+            </div>
+        </section>
+    </body>
+    {% else %}
+    <body class="empty-cart">
+    <img src="{% static 'images/empty-cart.jpg' %}" alt="Empty Cart">
+    <p>Looks like you have not added any product to your cart.Go <br> ahead and explore our products.</p>
+    </body>
+    {% endif %}
+</html>
+{% endblock %}

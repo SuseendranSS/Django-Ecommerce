@@ -1,0 +1,36 @@
+{% extends 'base/base.html' %}
+{% block start %}
+<html lang="en">
+    {% load static %}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{% static 'css/payment.css' %}" />
+        <title>Ecommerce | Success</title>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <th>User Email</th>
+                <td>{{ user_email }}</td>
+            </tr>
+            <tr>
+                <th>Order ID</th>
+                <td>{{ order_id }}</td>
+            </tr>
+            <tr>
+                <th>Payment ID</th>
+                <td>{{ payment_id }}</td>
+            </tr>
+            <tr>
+                <th>Order Amount</th>
+                <td>{{ order_amount }}</td>
+            </tr>
+        </table>
+        <img src="{% static 'images/success.png' %}" />
+        <h1>Payment Success</h1>
+        <p class="thank-you-text">Thank you for your order. We are looking forward to more orders. Happy shopping!</p>
+        <p class="contact-support">For queries, contact <a href="mailto:supportEcom@gmail.com">supportEcom@gmail.com</a>.</p>
+    </body>
+</html>
+{% endblock %}

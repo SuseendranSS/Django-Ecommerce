@@ -1,0 +1,164 @@
+{% extends 'base/base.html' %}
+
+{% block start %}
+{% load static %}
+
+<div class="container">
+  <div class="product">
+    <div class="product-image">
+      <img src="../../media/{{product.product_images.first.image}}" alt="Product Image">
+    </div>
+    <div class="product-info">
+      <h1 class="product-title">{{product.product_name}}</h1>
+      <div class="product-rating">
+        <span class="star" data-rating="1"></span>
+        <span class="star" data-rating="2"></span>
+        <span class="star" data-rating="3"></span>
+        <span class="star" data-rating="4"></span>
+        <span class="star" data-rating="5"></span>
+        <span class="rating-value">(4/5)</span>
+      </div>
+      <p class="product-description">{{product.product_description}}</p>
+      <p class="product-price">Rs.
+        {% if updated_price %}
+        {{updated_price}}
+        {% else %}
+        {{product.price}}
+        {% endif %}</p><br>
+      <form>
+        {% if product.size_variant.count %}
+      <div class="product-options">
+        <label for="size">Size:</label>
+        {% for size in product.size_variant.all %}
+        <input type="radio" onchange = "get_price('{{size.size_name}}')"name="size" {% if selected_size == size.size_name %} checked {% endif %}>
+        <label for="{{size.size_name}}">{{size.size_name}}</label>
+        {% endfor %}
+      </div>
+        {% endif %}
+      <div class="product-quantity">
+        <label class="quantity-label" for="quantity">Quantity:</label>
+        <div class="quantity-controls">
+          <button type="button" class="decrease-quantity">-</button>
+          <input type="number" name="quantity" value="1" min="1" max="10">
+          <button type="button" class="increase-quantity">+</button>
+        </div>
+      </div>     
+    </form> 
+      <div class="product-buttons">
+        <a><button class="buy-now">Buy Now</button></a>
+        <a href = "{% url 'add_to_cart' product.uid %}?variant={{selected_size}}"><button class="add-to-cart">Add to Cart <i class="fa-solid fa-cart-shopping"></i></button></a>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+<div class = "review">
+  <section class = "user-info">
+    <img src = "{% static 'images/logo.jpg' %}">
+    <section class = "user-info1">
+      <p>Anand</p>
+      <span class="star" data-rating="1"></span>
+      <span class="star" data-rating="2"></span>
+      <span class="star" data-rating="3"></span>
+      <span class="star" data-rating="4"></span>
+    </section>
+  </section>
+  <p>{% lorem 1 b random %}</p>
+</div>
+<div class = "review">
+  <section class = "user-info">
+    <img src = "{% static 'images/logo.jpg' %}">
+    <section class = "user-info1">
+      <p>Siddharth</p>
+      <span class="star" data-rating="1"></span>
+      <span class="star" data-rating="2"></span>
+      <span class="star" data-rating="3"></span>
+      <span class="star" data-rating="4"></span>
+    </section>
+  </section>
+  <p>{% lorem 1 b random %}</p>
+</div>
+<div class = "review">
+  <section class = "user-info">
+    <img src = "{% static 'images/logo.jpg' %}">
+    <section class = "user-info1">
+      <p>Kunal</p>
+      <span class="star" data-rating="1"></span>
+      <span class="star" data-rating="2"></span>
+      <span class="star" data-rating="3"></span>
+      <span class="star" data-rating="4"></span>
+    </section>
+  </section>
+  <p>{% lorem 1 b random %}</p>
+</div>
+<div class = "review">
+  <section class = "user-info">
+    <img src = "{% static 'images/logo.jpg' %}">
+    <section class = "user-info1">
+      <p>Aarav</p>
+      <span class="star" data-rating="1"></span>
+      <span class="star" data-rating="2"></span>
+      <span class="star" data-rating="3"></span>
+      <span class="star" data-rating="4"></span>
+    </section>
+  </section>
+  <p>{% lorem 1 b random %}</p>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const quantityInput = document.querySelector('input[name="quantity"]');
+    const decreaseButton = document.querySelector('.decrease-quantity');
+    const increaseButton = document.querySelector('.increase-quantity');
+    const addToCartButton = document.querySelector('.add-to-cart');
+
+    // Function to retrieve CSRF token from cookies
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Check if this cookie name matches the CSRF token cookie name
+                if (cookie.startsWith(name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    decreaseButton.addEventListener('click', function() {
+        if (parseInt(quantityInput.value) > 1) {
+            quantityInput.value = parseInt(quantityInput.value) - 1;
+        }
+    });
+
+    increaseButton.addEventListener('click', function() {
+        if (parseInt(quantityInput.value) < 10) { // assuming max quantity is 10
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+        }
+    });
+
+    addToCartButton.addEventListener('click', function() {
+        const currentQuantity = quantityInput.value;
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/print_quantity_to_console'); // Replace this with your server endpoint
+
+        // Get CSRF token from cookies
+        const csrftoken = getCookie('csrftoken');
+        // Set CSRF token in the request header
+        xhr.setRequestHeader('X-CSRFToken', csrftoken);
+
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({ quantity: currentQuantity }));
+    });
+});
+  
+/* price calculation */
+function get_price(size){
+  window.location.href = window.location.pathname + `?size=${size}`
+}
+</script>
+
+{% endblock %}

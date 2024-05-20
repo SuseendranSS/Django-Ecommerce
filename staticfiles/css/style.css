@@ -1,0 +1,344 @@
+/* Basic Styling */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  a {
+    text-decoration: none;
+    color: black;
+    transition: all 0.3s ease-in-out;
+    font-weight: 500;
+  }
+  
+  a:hover {
+    color: #ed3850;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ed3850;
+    color: #fff;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .btn:hover {
+    color: white;
+    background-color: #e86274;
+    cursor: pointer;
+  }
+
+/* Header Styling */
+header {
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .logo img {
+    max-width: 100%;
+    height: 5rem;
+  }
+  
+  nav ul {
+    display: flex;
+  }
+  
+  nav ul li {
+    margin: 0 20px;
+  }
+  
+  nav ul li:last-child {
+    margin-right: 0;
+  }
+
+/*hero styling*/
+
+.hero{
+  background-color: #f2f2f2;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.hero .hleft{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero .hleft h1{
+  font-size: 4rem;
+}
+
+.hero .hleft a{
+  width: 95px;
+}
+
+.hero-hr {
+  background-color: black;
+  height: 1.5px;
+  width: 100%;
+  border: none;
+}
+
+.hr{
+  background-color: #ed3850;
+  height: 5px;
+  width: 50px;
+  border: none;
+  border-radius: 5px;
+}
+
+.category{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  margin-left: 10rem;
+  margin-right: 10rem;
+  margin-bottom: 2rem;
+  gap: 4rem;
+}
+.category p{
+  background-color: white;
+  width: fit-content;
+  padding: 10px;
+  font-size: 1.2rem;
+  font-weight: bolder;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.category p:hover{
+  transform: scale(1.1);
+}
+
+.men {
+  background-image: url('../images/m.jpg');
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 300px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.accessories {
+  background-image: url('../images/acc.jpg');
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.women {
+  background-image: url('../images/w.jpg');
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* New Arrivals */
+
+.na {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.na h2 {
+  margin-bottom: 5px;
+}
+
+.na ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.na ul li {
+  margin: 0 10px;
+}
+
+.na ul li a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: white;
+  color: black;
+  transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.na ul li a:hover {
+  background-color: #ed3850;
+  color: white;
+}
+
+.naitems{
+  display: flex;
+}
+
+.naitems {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-left: 5rem;
+  margin-right: 5rem;
+}
+
+.naitem {
+  width: calc(100% / 5); /* Set width to 1/3 of the container */
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.naitem img{
+  max-width: 100px;
+  max-height: 100px;
+}
+
+@media screen and (max-width: 768px) {
+  /* Adjust styles for smaller screens */
+  .naitem {
+    width: calc(100% / 2); /* Set width to 1/2 of the container */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /* Adjust styles for even smaller screens */
+  .naitem {
+    width: 100%; /* Set width to 100% of the container */
+  }
+}
+
+/* deal of week */
+
+.dealofweek{
+  background-color: #f2f2f2;
+  height: 500px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.dow-right{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: cente
+}
+
+.dow-right h2{
+  margin-bottom: 0;
+}
+
+/* deal of week timer */
+.timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 25px;
+  padding: 10px;
+}
+
+.circle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: white;
+  margin: 10px;
+}
+
+.digit {
+  font-size: 24px;
+  color: #ed3850;
+}
+
+.label {
+  font-size: 14px;
+  color: #ed3850;
+  margin-top: 5px;
+}
+
+/* Newsletter */
+#nl{
+  display: flex;
+  justify-content: space-between;
+  margin-left: 5rem;
+  margin-right: 5rem;
+}
+
+.nright{
+  margin-top: 30px;
+}
+
+.nright input{
+  height: 40px;
+  width: 400px;
+}
+
+.nright button{
+  border-radius: 0px;
+  border:none;
+  height: 40px;
+  padding: 10px 20px;
+  background-color: #ed3850;
+  color: #fff;
+  cursor: pointer;
+}
+
+.nright button:hover {
+  background-color: #ed3850;
+  color: white;
+}
+
+/* Footer */
+footer{
+  display: flex;
+  justify-content: space-between;
+}
+.fleft{
+  margin-left: 5rem;
+}
+.fright{
+  margin-right: 5rem;
+}
+.social-media-icons{
+  display: flex;
+  gap:50px
+}
+

@@ -1,0 +1,172 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block start %}
+
+<main>
+  <section class="hero">
+    <div class="hleft">
+      <h1>
+        Get upto 30% off on <br />
+        New Arrivals
+      </h1>
+      <a href="#na" class="btn">Explore Now</a>
+      <hr class="hero-hr" />
+    </div>
+    <div class="hright">
+      <img src="{% static 'images/na.png' %}" />
+    </div>
+  </section>
+  <section class="category">
+    <div class="men">
+      <a href = "{% url 'category_view' 'men'%}">MEN</a>
+    </div>
+    <div class="accessories">
+      <a href = "{% url 'category_view' 'accessories'%}">ACCESSORIES</a>
+    </div>
+    <div class="women">
+      <a href = "{% url 'category_view' 'women'%}">WOMEN</a>
+    </div>
+  </section>
+  <section class="newarrivals" id = "na">
+    <div class="na">
+      <h2>New Arrivals</h2>
+      <hr class="hr" />
+      <ul>
+        {% for c in categories %}
+        <a data-slug="{{ c.slug }}">
+          <li>{{c.category_name}}</li>
+        </a>
+        {% endfor %}
+      </ul>
+    </div>
+    <div id="product-container" class="naitems">
+      {% for product in products %}
+      <a href="{% url 'product_details' product.slug %}">
+        <div class="naitem" data-category="{{ product.category }}">
+          <img src="{{ MEDIA_URL }}{{ product.product_images.first.image.url }}" alt="product image" />
+          <p class="item-description">{{ product.product_name }}</p>
+          <p class="price">Rs.{{ product.price }}/-</p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    <div id="product-container" class="naitems"></div>
+  </section>
+  <section class="dealofweek">
+    <div class="dow-left">
+      <img src="{% static 'images/dow.png' %}" class="dow-img" />
+    </div>
+    <div class="dow-right">
+      <h2>Deal Of The Week</h2>
+      <hr class="hr" />
+      <div class="timer">
+        <div class="circle">
+          <span id="days" class="digit">00</span>
+          <span class="label">Days</span>
+        </div>
+        <div class="circle">
+          <span id="hours" class="digit">00</span>
+          <span class="label">Hours</span>
+        </div>
+        <div class="circle">
+          <span id="minutes" class="digit">00</span>
+          <span class="label">Minutes</span>
+        </div>
+        <div class="circle">
+          <span id="seconds" class="digit">00</span>
+          <span class="label">Seconds</span>
+        </div>
+      </div>
+      <a href="#na" class="btn">Explore Now</a>
+    </div>
+  </section>
+  <section class="newsletter" id="nl">
+    <div class="nleft">
+      <h4>Newsletter</h4>
+      <p>
+        Unlock exclusive offers and never miss a beat with our newsletter
+      </p>
+    </div>
+    <div class="nright">
+      {% csrf_token %}
+      <input type="text" class="email" placeholder="Example@gmail.com" />
+      <button type="submit">Subscribe</button>
+    </div>
+  </section>
+</main>
+<script>
+  function updateTimer() {
+    const now = new Date();
+    const futureDate = new Date("2025-01-01");
+    const timeDiff = futureDate - now;
+
+    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+    document.getElementById("days").textContent = String(days).padStart(
+      2,
+      "0"
+    );
+    document.getElementById("hours").textContent = String(hours).padStart(
+      2,
+      "0"
+    );
+    document.getElementById("minutes").textContent = String(minutes).padStart(
+      2,
+      "0"
+    );
+    document.getElementById("seconds").textContent = String(seconds).padStart(
+      2,
+      "0"
+    );
+  }
+
+  setInterval(updateTimer, 1000);
+
+// Fetch and display products using AJAX
+function fetchProducts(slug) {
+  console.log('Control is on fetchProducts');
+  var url = "pdt/get_products/" + slug;
+  console.log('Control has the url : ', url);
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      var productsHTML = "";
+      data.products.forEach(product => {
+        var imageUrl = product.product_images.length > 0 ? product.product_images[0] : ''; // Get the first image URL
+        productsHTML += `
+          <a href="/pdt/${product.slug}">
+            <div class="naitem" data-category="${product.category}">
+              <img src="${imageUrl}" alt="product image" />
+              <p class="item-description">${product.product_name}</p>
+              <p class="price">Rs.${product.price}/-</p>
+            </div>
+          </a>
+        `;
+      });
+      document.getElementById("product-container").innerHTML = productsHTML;
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+// Add event listener to category links
+document.querySelectorAll('.na ul a').forEach(link => {
+  link.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default link behavior
+    var slug = this.getAttribute('data-slug');
+    console.log('Clicked on category:', slug);
+    if (slug) {
+      fetchProducts(slug);
+    } else {
+      console.error("No slug attribute found");
+    }
+  });
+});
+
+</script>
+{% endblock %}

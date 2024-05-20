@@ -1,0 +1,52 @@
+<html>
+  {% load static %}
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ecommerce | SignUp</title>
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}" />
+  </head>
+  <body>
+    <section>
+      <div class="form-box">
+        <div class="form-value">
+          <form method="POST">
+            {% csrf_token %} {% include "base/alert.html" %}
+            <h2>SignUp</h2>
+            <div class="inputbox">
+              <ion-icon name="person-outline"></ion-icon>
+              <input type="text" name="first_name" required />
+              <label for="">Firstname</label>
+            </div>
+            <div class="inputbox">
+              <ion-icon name="person-outline"></ion-icon>
+              <input type="text" name="last_name" required />
+              <label for="">Lastname</label>
+            </div>
+            <div class="inputbox">
+              <ion-icon name="mail-outline"></ion-icon>
+              <input type="email" name="email" required />
+              <label for="">Email</label>
+            </div>
+            <div class="inputbox">
+              <ion-icon name="lock-closed-outline"></ion-icon>
+              <input type="password" name="password" required />
+              <label for="">Password</label>
+            </div>
+            <button>SignUp</button>
+            <div class="register">
+              <p>Already have an account ?<a href="../login/">login</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>
