@@ -1,16 +1,23 @@
 {
-	"builds": [{
+	"builds": [
+	  {
 		"src": "Ecommerce/wsgi.py",
 		"use": "@vercel/python",
 		"config": {
-			"maxLambdaSize": "15mb",
-			"runtime": "python3.11"
+		  "maxLambdaSize": "15mb",
+		  "runtime": "python3.11"
 		}
-	}],
-	"routes": [{
+	  }
+	],
+	"routes": [
+	  {
+		"src": "/media/(.*)",
+		"dest": "https://ecommerce-sepia-psi.vercel.app/media/$1"
+	  },
+	  {
 		"src": "/(.*)",
 		"dest": "Ecommerce/wsgi.py"
-	}]
-}
-
-
+	  }
+	]
+  }
+  
