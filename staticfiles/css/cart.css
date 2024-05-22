@@ -1,0 +1,188 @@
+/* cart.css */
+body.cart-items-exist {
+    background-color: #f2f2f2;
+}
+
+body.empty-cart {
+    background-color: #ffffff;
+}
+
+section{
+    margin-bottom: 50px;
+}
+
+.cart{
+    display: flex;
+}
+
+.right{
+    display: flex;
+    flex-direction: column;
+    margin-right: auto;
+}
+
+.coupon-box{
+    margin: 25px auto 10px 0px;
+    max-height: 100px;
+    max-width: 18.75rem;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input {
+    height: 15px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input:focus {
+    outline: 2px solid rgba(0, 0, 0, 0.467); 
+}
+
+.applied-coupons{
+    height: auto;
+    width: 15.625rem;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.applied-coupons form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.applied-coupons a{
+    padding: 8px 16px;
+    background-color: #ed3850;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: auto ;
+    margin-bottom: 10px;
+}
+
+.applied-coupons a:hover{
+    background-color: #c92b3a;
+}
+
+.payment{
+    margin: 10px auto 60px 0px;
+    max-height: 100px;
+    width: 15.625rem;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-page {
+    margin: 25px 10px auto auto;
+    width: 800px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th {
+    text-align: left;
+    padding: 10px;
+    color: #fff;
+    background: #ed3850;
+    font-weight: bold;
+}
+
+th:first-child {
+    border-top-left-radius: 5px;
+}
+
+th:last-child {
+    border-top-right-radius: 5px;
+}
+
+td {
+    padding: 10px;
+}
+
+td img {
+    margin-right: 10px;
+    width: 120px;
+    height: 120px;
+    border-radius: 25px;
+}
+
+button {
+    padding: 8px 16px;
+    background-color: #ed3850;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #c92b3a;
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.pdt {
+    display: flex;
+    align-items: center; 
+}
+
+.pdt img {
+    margin-right: 10px; 
+}
+
+.pdt p {
+    margin-left: 50px;
+}
+
+.total-price {
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+.pay-button {
+    padding: 6px 12px;
+    font-size: 14px;
+}
+
+
+/* Empty Cart Css */
+
+.empty-cart {
+    background-color: #ffffff; 
+    text-align: center;
+}
+
