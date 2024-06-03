@@ -43,7 +43,7 @@
       {% for product in products %}
       <a href="{% url 'product_details' product.slug %}">
         <div class="naitem" data-category="{{ product.category }}">
-          <img src="../..{{ product.product_images.first.image.url }}" alt="product image" />
+          <img src="{{MEDIA_URL}}{{ product.product_images.first.image.url }}" alt="product image" />
           <p class="item-description">{{ product.product_name }}</p>
           <p class="price">Rs.{{ product.price }}/-</p>
         </div>
